@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "vec.h"
+#include <lab_math/vec.h>
 
 int main()
 {
