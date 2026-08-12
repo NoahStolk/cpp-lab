@@ -85,6 +85,11 @@ identical. Functions are stricter, and that's where it bites:
   rejects it as a duplicate symbol as soon as a second `.cpp` includes that
   header.
 
+`friend` functions defined in the class body count as inside it for this
+purpose, and are implicitly `inline` too — see
+[`operators.md`](operators.md), which also covers why `vec.h` defines its
+stream operator that way.
+
 Note the failure mode differs: the guard problem is a *compiler* error in one
 file, this one is a *linker* error that only appears once a second `.cpp`
 includes the header. Adding `inline` (or moving the definition into a `.cpp`) is

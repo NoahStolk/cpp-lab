@@ -18,6 +18,7 @@ The user's working background is C# and .NET, not C++ or CMake. Reach for .NET a
 
 - `cmake.md` — multi-target build, the .NET vocabulary map, `PRIVATE`/`PUBLIC`/`INTERFACE`
 - `headers.md` — `#include` semantics, `#pragma once` vs guards, ODR and `inline`
+- `operators.md` — operator overloading, member vs non-member, `friend` and hidden friends
 
 ## Build
 

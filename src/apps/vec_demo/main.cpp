@@ -15,5 +15,8 @@ int main()
     const Vec3 dir = Vec3(1, 0, 0);
     std::cout << dir.z << "\n";
 
+    const Vec3 posB = pos + Vec3(4, 4, 4);
+    std::cout << posB << "\n";
+
     return 0;
 }
