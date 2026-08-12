@@ -1,9 +1,5 @@
-//
-// Created by noah on 8/11/26.
-//
+#pragma once
 
-#ifndef CPP_LAB_VEC_H
-#define CPP_LAB_VEC_H
 #include <cmath>
 
 struct Vec3
@@ -27,5 +23,3 @@ struct Vec3
         return std::sqrt(len_squared());
     }
 };
-
-#endif //CPP_LAB_VEC_H

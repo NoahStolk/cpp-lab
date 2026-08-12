@@ -148,9 +148,9 @@ then `#include <other_lib/foo.h>` without linking `other_lib`, and for
 header-only libraries it would link fine too. Dependencies stop being enforced
 by the build system, and it only becomes visible much later.
 
-Use angle brackets for headers arriving via an include path, quotes for a
-target's own headers relative to the including file. Quotes search the including
-file's directory first; the distinction signals where a header comes from.
+The language-level side of headers — angle brackets vs quotes, `#pragma once`
+and guards, and what the ODR permits across translation units — is in
+[`headers.md`](headers.md).
 
 ## Commands
 

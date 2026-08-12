@@ -14,7 +14,10 @@ Docs, build config and learning notes are not "the code" — write those when as
 
 The user's working background is C# and .NET, not C++ or CMake. Reach for .NET analogies when they help, and name the places they break down — CMake in particular maps badly: a **target** (`add_executable`/`add_library`) is the analogue of a `.csproj`, while `project()` is only loosely a `.sln` and `CMakeLists.txt` is a per-directory build script belonging to neither. Don't assume C++/CMake vocabulary is already familiar.
 
-`docs/learnings/` holds notes written up from these sessions; `docs/learnings/cmake.md` covers the multi-target build, the .NET vocabulary map, and `PRIVATE`/`PUBLIC`/`INTERFACE`. Keep it current when the build layout changes.
+`docs/learnings/` holds notes written up from these sessions — one file per topic, kept current as the repo changes:
+
+- `cmake.md` — multi-target build, the .NET vocabulary map, `PRIVATE`/`PUBLIC`/`INTERFACE`
+- `headers.md` — `#include` semantics, `#pragma once` vs guards, ODR and `inline`
 
 ## Build
 
