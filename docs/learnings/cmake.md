@@ -148,6 +148,10 @@ then `#include <other_lib/foo.h>` without linking `other_lib`, and for
 header-only libraries it would link fine too. Dependencies stop being enforced
 by the build system, and it only becomes visible much later.
 
+How a test target fits this layout — why `tests/` sits beside `include/` rather
+than inside it, and what `enable_testing()` / `add_test()` do — is in
+[`testing.md`](testing.md).
+
 The language-level side of headers — angle brackets vs quotes, `#pragma once`
 and guards, and what the ODR permits across translation units — is in
 [`headers.md`](headers.md).

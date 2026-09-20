@@ -19,6 +19,7 @@ The user's working background is C# and .NET, not C++ or CMake. Reach for .NET a
 - `cmake.md` — multi-target build, the .NET vocabulary map, `PRIVATE`/`PUBLIC`/`INTERFACE`
 - `headers.md` — `#include` semantics, `#pragma once` vs guards, ODR and `inline`
 - `operators.md` — operator overloading, member vs non-member, `friend` and hidden friends
+- `testing.md` — CTest vs the framework, `static_assert` tests, wiring a test target
 
 ## Build
 
@@ -29,6 +30,9 @@ ninja -C cmake-build-debug                          # build everything
 ninja -C cmake-build-debug vec_demo                 # build one target
 ./cmake-build-debug/src/apps/vec_demo/vec_demo      # run
 
+ctest --test-dir cmake-build-debug                  # run tests
+ctest --test-dir cmake-build-debug --output-on-failure
+
 # regenerate after editing CMakeLists.txt — must be the CLion-bundled cmake
 ~/.local/share/JetBrains/Toolbox/apps/clion/bin/cmake/linux/x64/bin/cmake \
   -S . -B cmake-build-debug -G Ninja -DCMAKE_BUILD_TYPE=Debug
@@ -36,7 +40,7 @@ ninja -C cmake-build-debug vec_demo                 # build one target
 
 `cmake_minimum_required(VERSION 4.3)` is satisfied only by the CLion-bundled CMake (4.3.1) at the path above. The `cmake` on `PATH` (`~/.cmake-deps/…`) is 4.1.2 and **fails to configure**. The compiler is `/usr/bin/c++` (GCC 13); each target sets its own `-Wall -Wextra`.
 
-There is no test framework or formatter configured. Lint config lives in `.clang-tidy`; `.editorconfig` sets 4-space indent, UTF-8, trimmed trailing whitespace, final newline.
+There is no formatter configured. Tests are plain executables registered with CTest and use `static_assert` only — **no test framework is wired up**; see `docs/learnings/testing.md` before adding one. Lint config lives in `.clang-tidy`; `.editorconfig` sets 4-space indent, UTF-8, trimmed trailing whitespace, final newline.
 
 Running clang-tidy from the command line needs GCC's internal include dir, or it dies on `'stddef.h' file not found` (the `compile_commands.json` records GCC flags but clang-tidy parses with a clang frontend):
 
@@ -57,6 +61,9 @@ CMakeLists.txt                          # ONLY file with cmake_minimum_required 
 src/libs/lab_math/
     CMakeLists.txt                      # target declarations only
     include/lab_math/vec.h              # public headers
+    tests/
+        CMakeLists.txt                  # target declarations only
+        vec.tests.cpp                   # static_assert tests
 src/apps/vec_demo/
     CMakeLists.txt                      # target declarations only
     main.cpp
@@ -71,6 +78,8 @@ Conventions to preserve when adding a library or app:
 - `lab_math` is header-only, hence `add_library(lab_math INTERFACE)`. It becomes `STATIC` and its include dirs become `PUBLIC` once it gains a `.cpp`.
 - Warning flags are `PRIVATE` on each target — there is no global flag setting, so a new target gets no warnings until it sets them.
 - Target names are global across the whole build and must be unique; don't reuse the `project()` name (`cpp_lab`) for a target.
+- Tests live in `tests/` **beside** `include/`, never inside it — `include/` is the library's public surface, and a test TU is not part of it. A test target is an ordinary `add_executable` that links the library under test and calls `add_test()`.
+- `enable_testing()` is called once, in the root `CMakeLists.txt`, and must precede the `add_subdirectory()` reaching any directory that calls `add_test()`.
 
 `CMAKE_CXX_STANDARD` is set to 26, but the installed GCC silently compiles as `gnu++23` — don't assume C++26 features are actually available.
 
@@ -78,4 +87,4 @@ Build trees are not relocatable: `CMakeCache.txt` and `build.ninja` bake in abso
 
 ## Current state
 
-`src/libs/lab_math/include/lab_math/vec.h` holds a `Vec3` aggregate exercised from `src/apps/vec_demo/main.cpp`, the scratch driver. Expect half-finished experiments here — commented-out code and unused members are deliberate learning scratch, not bugs to fix unprompted.
+`src/libs/lab_math/include/lab_math/vec.h` holds a `Vec3` exercised from `src/apps/vec_demo/main.cpp`, the scratch driver, and from the `lab_math_tests` target. Most of `Vec3` is `constexpr`, so its tests are `static_assert`s — the build succeeding *is* the pass, and the empty `main()` exists only to give CTest an exit code. `len()` is not `constexpr` (it calls `std::sqrt`) and has no test yet. Expect half-finished experiments here — commented-out code and unused members are deliberate learning scratch, not bugs to fix unprompted.
