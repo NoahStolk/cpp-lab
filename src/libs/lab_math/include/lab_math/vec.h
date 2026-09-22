@@ -3,7 +3,7 @@
 #include <cmath>
 #include <iostream>
 
-struct Vec3
+struct Vec3 final
 {
     float x;
     float y;

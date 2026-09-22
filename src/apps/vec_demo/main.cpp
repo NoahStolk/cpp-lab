@@ -15,12 +15,12 @@ int main()
     constexpr Vec3 dir = Vec3(1, 0, 0);
     std::cout << dir.z << "\n";
 
-    Vec3 posB = pos + Vec3(4, 4, 4);
-    std::cout << posB << "\n";
+    Vec3 pos_b = pos + Vec3(4, 4, 4);
+    std::cout << pos_b << "\n";
 
-    posB += Vec3(1, 1, 1);
-    std::cout << posB << "\n";
-    std::cout << -posB << "\n";
+    pos_b += Vec3(1, 1, 1);
+    std::cout << pos_b << "\n";
+    std::cout << -pos_b << "\n";
 
     return 0;
 }

@@ -5,7 +5,7 @@
 
 #include "dereferenceable.h"
 
-static void print(Dereferenceable auto t)
+static void print(const Dereferenceable auto t)
 {
     using Pointee = std::remove_pointer_t<decltype(t)>;
 

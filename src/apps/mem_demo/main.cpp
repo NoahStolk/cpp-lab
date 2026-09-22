@@ -1,4 +1,5 @@
 #include "print_utils.h"
+#include "union.h"
 #include "lab_math/vec.h"
 
 static void dummy1() { }
@@ -25,4 +26,11 @@ int main()
 
     delete p;
     print(p);
+
+    header("Unions");
+    IntOrFloat i = IntOrFloat(1);
+    print(&i);
+
+    IntOrFloat f = IntOrFloat(1.0F);
+    print(&f);
 }
