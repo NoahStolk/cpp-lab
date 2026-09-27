@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 26)
 
 add_subdirectory(src/libs/lab_math)
 
+add_subdirectory(src/apps/game_demo)
 add_subdirectory(src/apps/mem_demo)
 add_subdirectory(src/apps/vec_demo)
 

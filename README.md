@@ -5,3 +5,7 @@ Experimenting and learning modern C++ pragmatically.
 This project will eventually contain various libraries and example programs for learning purposes.
 
 Code will *not* be AI generated, but AI can be used to assist in learning.
+
+## CMD
+
+- Validate Clang tidy: `~/.local/share/JetBrains/Toolbox/apps/clion/bin/clang/linux/x64/bin/clang-tidy --verify-config`

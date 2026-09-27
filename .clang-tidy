@@ -6,6 +6,7 @@ Checks: >
     performance-*,
     readability-*,
     misc-*,
+    -misc-non-private-member-variables-in-classes,
     -modernize-use-auto,
     -modernize-use-trailing-return-type,
     -readability-identifier-length,
